@@ -6,7 +6,6 @@ const dialogflow = require("@google-cloud/dialogflow");
 const path = require("path");
 const socketio = require("socket.io");
 const uuid = require("uuid");
-const { Server } = require("http");
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -15,7 +14,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(
+const server = app.listen(
     PORT,
     console.log(
         `Server is running on ${process.env.NODE_ENV} mode at port ${PORT}`.yellow.bold

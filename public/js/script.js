@@ -1,6 +1,7 @@
 const btn = document.querySelector("button");
 const outputme = document.querySelector(".output-you");
 const outputbot = document.querySelector(".output-bot");
+const socket = io();
 
 const SpeechRecognition = 
     window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -15,14 +16,13 @@ btn.addEventListener("click", () => {
 });
 
 recognition.onresult = function (event) {
-    const last = event.results.length -1;
+    const last = event.results.length - 1;
     const text = event.results[last][0].transcript;
     console.log(text);
 
     outputme.textContent = text;
 };
 
-const socket = io();
 
 socket.emit("chat message", text);
 
