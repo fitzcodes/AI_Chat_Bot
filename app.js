@@ -15,55 +15,55 @@ app.use(express.static(path.join(__dirname, "public")));
 const PORT = process.env.PORT || 3000;
 
 const server = app.listen(
-    PORT,
-    console.log(
-        `Server is running on ${process.env.NODE_ENV} mode at port ${PORT}`.yellow.bold
-    )
+  PORT,
+  console.log(
+    `Server is runnig on ${process.env.NODE_ENV} mode at port ${PORT}`.yellow
+      .bold
+  )
 );
 
 const io = socketio(server);
 io.on("connection", function (socket) {
-    console.log("a user connected");
+  console.log("a user connected");
 
-    socket.on("chat message", (message) => {
-        console.log(message);
+  socket.on("chat message", (message) => {
+    console.log(message);
 
-        const callapibot = async (projectId = process.env.PROJECT_ID) => {
-            try {
-                const sessionId = uuid.v4();
-                const sessionClient = new dialogflow.SessionsClient({
-                    keyFilename: "./smartbot-dkgh-14167337634e.json.json",
-                });
-                const sessionPath = sessionClient.projectAgentSessionPath(
-                    projectId,
-                    sessionId
-                );
-                const request = {
-                    session: sessionPath,
-                    queryInput: {
-                        text: {
-                            text: message,
-                            languageCode: "en-US",
-                        },
-                    },
-                };
-                const responses = await sessionClient.detectIntent(request);
-                console.log("Detected intent");
-
-                const result = responses[0].queryResult.fulfillmentText;
-
-                socket.emit("bot reply", result);
-
-                if (result.intent) {
-                    console.log(`Intent: ${result.intent.displayName}`);
-                } else {
-                    console.log(` No intent matched.`);
-                }
-            } catch (error) {
-                console.log(error);
-            }
+    const callapibot = async (projectId = process.env.PROJECT_ID) => {
+      try {
+        const sessionId = uuid.v4();
+        const sessionClient = new dialogflow.SessionsClient({
+          keyFilename: "./smartbot-dkgh-14167337634e.json",
+        });
+        const sessionPath = sessionClient.projectAgentSessionPath(
+          projectId,
+          sessionId
+        );
+        const request = {
+          session: sessionPath,
+          queryInput: {
+            text: {
+              text: message,
+              languageCode: "en-US",
+            },
+          },
         };
+        const responses = await sessionClient.detectIntent(request);
 
-        callapibot();
-    });
+        console.log("Detected intent");
+        const result = responses[0].queryResult.fulfillmentText;
+        socket.emit("bot reply", result);
+        console.log(result);
+        if (result.intent) {
+          console.log(`  Intent: ${result.intent.displayName}`);
+        } else {
+          console.log(`  No intent matched.`);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    callapibot();
+  });
 });
