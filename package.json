@@ -13,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "NODE_ENV=production node app",
+    "start": "NODE_ENV=production nodemon app",
     "dev": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

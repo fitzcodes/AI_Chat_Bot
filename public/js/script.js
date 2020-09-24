@@ -21,10 +21,10 @@ recognition.onresult = function (event) {
     console.log(text);
 
     outputme.textContent = text;
+    socket.emit("chat message", text);
 };
 
 
-socket.emit("chat message", text);
 
 const botReply = (text) => {
     const synth = window.speechSynthesis;

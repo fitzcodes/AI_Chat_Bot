@@ -1,11 +1,11 @@
+const path = require("path");
 const express = require("express");
 const colors = require("colors");
 const dotenv = require("dotenv");
-const app = express();
-const dialogflow = require("@google-cloud/dialogflow");
-const path = require("path");
 const socketio = require("socket.io");
+const dialogflow = require("@google-cloud/dialogflow");
 const uuid = require("uuid");
+const app = express();
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -32,7 +32,7 @@ io.on("connection", function (socket) {
             try {
                 const sessionId = uuid.v4();
                 const sessionClient = new dialogflow.SessionsClient({
-                    keyFilename: "./aichatbot-dlsp-e19e64387fa2.json",
+                    keyFilename: "./smartbot-dkgh-14167337634e.json.json",
                 });
                 const sessionPath = sessionClient.projectAgentSessionPath(
                     projectId,
