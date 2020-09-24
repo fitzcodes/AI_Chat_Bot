@@ -19,7 +19,6 @@ recognition.onresult = function (event) {
   const last = event.results.length - 1;
   const text = event.results[last][0].transcript;
   console.log(text);
-
   outputme.textContent = text;
   socket.emit("chat message", text);
 };
