@@ -32,7 +32,7 @@ io.on("connection", function (socket) {
             try {
                 const sessionId = uuid.v4();
                 const sessionClient = new dialogflow.SessionsClient({
-                    keyFilename: "./aichatbot-dldp-e19e64387fa2.json",
+                    keyFilename: "./aichatbot-dlsp-e19e64387fa2.json",
                 });
                 const sessionPath = sessionClient.projectAgentSessionPath(
                     projectId,
@@ -48,6 +48,7 @@ io.on("connection", function (socket) {
                     },
                 };
                 const responses = await sessionClient.detectIntent(request);
+                console.log("Detected intent");
 
                 const result = responses[0].queryResult.fulfillmentText;
 
@@ -56,7 +57,7 @@ io.on("connection", function (socket) {
                 if (result.intent) {
                     console.log(`Intent: ${result.intent.displayName}`);
                 } else {
-                    console.log(`No intent matched.`);
+                    console.log(` No intent matched.`);
                 }
             } catch (error) {
                 console.log(error);
@@ -64,5 +65,5 @@ io.on("connection", function (socket) {
         };
 
         callapibot();
-    })
+    });
 });
