@@ -32,7 +32,7 @@ io.on("connection", function (socket) {
       try {
         const sessionId = uuid.v4();
         const sessionClient = new dialogflow.SessionsClient({
-          keyFilename: "./smartbot-dkgh-14167337634e.json",
+          keyFilename: "./smartbot-dkgh-5e8a17fdde9f.json",
         });
         const sessionPath = sessionClient.projectAgentSessionPath(
           projectId,
